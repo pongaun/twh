@@ -1,0 +1,96 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame; //ctrl+shift+o
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class Frame {
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame(); // 빈 프레임 생성, 윈도우창
+		// JFrame frame = new JFrame("Hello Java"); 프레임 타이틀 Hello Java 생성
+
+		JPanel panel = new JPanel();// frame안에서 여러가지 frame 사용 할 수 있게함
+		// panel은 컴포넌트를 윈도우에 올리도록 비슷한 것끼리 조직화함
+
+		JLabel label = new JLabel("some text");//JLable은 글씨 표시
+		
+	    
+		JButton btn1 = new JButton("Click this!!");
+		//button 역할 글씨 표시하면서 동시에 누르는 기능 
+		
+		JButton btn2= new JButton("Exit");
+		
+		JTextArea txtarea=new JTextArea();//한줄이상 문자를 패널에 쓸때 사용
+		//JTextField txtField=new JTextField(200);한줄, 사용 할 때 숫자 들어감, 200글자 사용 가능
+		
+		JPanel btnPanel = new JPanel();
+		
+		btnPanel.add(btn1);//버튼 패널에 btn1 삽입
+		btnPanel.add(btn2);
+		
+		 panel.setLayout(new BorderLayout());
+		    //setLayout을 사용해 자기가 원하는 위치(상,하,좌,우)에 요소(패널, 레이블, 버튼등) 배치
+		 
+			panel.add(label, BorderLayout.NORTH);//북쪽에 위치
+		
+			//panel.add(btn1, BorderLayout.WEST);//버튼 서쪽 위치
+			panel.add(btnPanel, BorderLayout.WEST);
+			
+			panel.add(txtarea, BorderLayout.CENTER);
+			
+			btn1.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				 
+				//txtarea.append("You are amazing\n");
+				//btn1 버튼을 누르면 txtArea를 이용하여 글이 출력될 수 있도록 기능을 ActionListener을 이용하여 추가
+				
+					label.setText(txtarea.getText());
+					//textarea에 있는 글을 가져와 그 글을 label에 박음, btn1을 누를때 textarea에 있는 글로 label이 바뀜
+				}
+				
+				
+			});
+			
+			btn2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0); 
+					
+				}
+				
+			});//btn2를 누르면 프로그램 종료 
+			
+		
+		frame.add(panel);// frame안에 panel 직접 넣어줘야함
+		//panel.add(new JLabel("Welcome Java"));
+		//panel안에 문자를 넣었지만 panel을 다시 frame에 넣었기 때문에 Welcome Java가 화면에 출력됨
+
+		frame.setVisible(true);// 프레임 보이기 여부 판단
+
+		frame.setPreferredSize(new Dimension(340, 840 / 12 * 9));
+		// 항상 되는것 x, 주로 원하는 사이즈 출력 하고 싶을때 사용, 항상 Dimension 사용
+		// Dimension은 두 개의 값 입력 왼쪽 가로 오른쪽 세로
+		// 화면 크기가 어떻든 간에 최대한 화면 비율 4:3으로 가깝게 만들어줌
+
+		frame.setSize(840, 840 / 12 * 9);
+		// setSize와 setP에 차이점은 FlowLayout에서 컴포넌트 크기 조정 setSize 사용x setp 사용o
+		// frame.setSize(Width, Height);
+
+		frame.setLocationRelativeTo(null);// 어떤 위치에 GUI 출력 할지 결정,프레임 가운데 정렬
+
+		frame.setResizable(false);// 창의 크기 true, false로 조절
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// frame 종료
+	}
+
+}
